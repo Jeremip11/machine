@@ -1,0 +1,14 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+    - image: golang:1.10
+    working_directory: /go/src/github.com/docker/machine
+    steps:
+    - checkout
+    - run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 make build
+    - run: find bin -type f | xargs sha256sum
+    - store_artifacts:
+        path: bin
+        destination: binaries
