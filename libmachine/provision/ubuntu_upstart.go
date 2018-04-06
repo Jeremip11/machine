@@ -27,10 +27,8 @@ func NewUbuntuProvisioner(d drivers.Driver) Provisioner {
 			DockerOptionsDir:  "/etc/docker",
 			DaemonOptionsFile: "/etc/default/docker",
 			OsReleaseID:       "ubuntu",
-			Packages: []string{
-				"curl",
-			},
-			Driver: d,
+			Packages:          []string{},
+			Driver:            d,
 		},
 	}
 }

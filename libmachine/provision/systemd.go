@@ -25,10 +25,8 @@ func NewSystemdProvisioner(osReleaseID string, d drivers.Driver) SystemdProvisio
 			DockerOptionsDir:  "/etc/docker",
 			DaemonOptionsFile: "/etc/systemd/system/docker.service.d/10-machine.conf",
 			OsReleaseID:       osReleaseID,
-			Packages: []string{
-				"curl",
-			},
-			Driver: d,
+			Packages:          []string{},
+			Driver:            d,
 		},
 	}
 }
