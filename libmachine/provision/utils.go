@@ -320,3 +320,21 @@ func waitForLock(ssh SSHCommander, cmd string) error {
 	}
 	return nil
 }
+
+func dpkgPackageInstalled(provisioner Provisioner, name string) (bool, error) {
+	log.Debugf("checking for package: %s", name)
+	command := fmt.Sprintf("dpkg -l %s", name)
+	_, err := provisioner.SSHCommand(command)
+	if err == nil {
+		return true, nil
+	}
+
+	// package is not installed
+	if strings.Contains(err.Error(), "no packages found matching") {
+		return false, nil
+	}
+
+	// unsure, treat as uninstalled and attempt install anyway
+	log.Warnf("Error checking if package is %s is installed: %s", name, err)
+	return false, err
+}

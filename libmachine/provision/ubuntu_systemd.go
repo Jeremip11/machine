@@ -50,6 +50,13 @@ func (provisioner *UbuntuSystemdProvisioner) CompatibleWithHost() bool {
 }
 
 func (provisioner *UbuntuSystemdProvisioner) Package(name string, action pkgaction.PackageAction) error {
+	if action == pkgaction.Install {
+		if i, _ := dpkgPackageInstalled(provisioner, name); i {
+			log.Debugf("package: name=%s already installed", name)
+			return nil
+		}
+	}
+
 	var packageAction string
 
 	updateMetadata := true
